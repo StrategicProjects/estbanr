@@ -21,7 +21,7 @@ Column layout of the files and the COSIF account dictionary.
   [`estban_verbetes()`](https://strategicprojects.github.io/estbanr/reference/estban_columns.md)
   : ESTBAN column layout and account dictionary
 - [`estban_clean_names()`](https://strategicprojects.github.io/estbanr/reference/estban_clean_names.md)
-  : Normalise ESTBAN column names to snake_case
+  : Normalize ESTBAN column names to snake_case
 
 ## Non-reports and aggregation
 

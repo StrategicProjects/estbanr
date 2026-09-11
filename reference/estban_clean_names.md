@@ -1,4 +1,4 @@
-# Normalise ESTBAN column names to snake_case
+# Normalize ESTBAN column names to snake_case
 
 Lower case, accents stripped, every run of non-alphanumeric characters
 collapsed to a single underscore. Combined columns such as

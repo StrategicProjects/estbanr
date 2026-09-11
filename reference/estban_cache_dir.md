@@ -21,7 +21,7 @@ estban_cache_dir(cache_dir = NULL, create = TRUE)
 
 ## Value
 
-A normalised directory path (character scalar).
+A normalized directory path (character scalar).
 
 ## Details
 
@@ -43,11 +43,11 @@ and avoid re-downloading months you already have.
 
 ``` r
 estban_cache_dir()
-#> [1] "/tmp/Rtmp0QboGC/estbanr-cache"
+#> [1] "/tmp/RtmpZnJgSK/estbanr-cache"
 
 # Persistent cache for the current session only:
 old <- options(estbanr.cache_dir = file.path(tempdir(), "estban-cache"))
 estban_cache_dir()
-#> [1] "/tmp/Rtmp0QboGC/estban-cache"
+#> [1] "/tmp/RtmpZnJgSK/estban-cache"
 options(old)
 ```
