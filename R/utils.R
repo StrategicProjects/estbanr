@@ -21,7 +21,7 @@
 #' @param create Logical. Create the directory when it does not exist
 #'   (default `TRUE`).
 #'
-#' @return A normalised directory path (character scalar).
+#' @return A normalized directory path (character scalar).
 #' @export
 #'
 #' @examples
@@ -47,7 +47,7 @@ estban_cache_dir <- function(cache_dir = NULL, create = TRUE) {
 
 # -- Reference month (AAAAMM) helpers -----------------------------------------
 
-#' Validate and normalise a reference month to an integer AAAAMM
+#' Validate and normalize a reference month to an integer AAAAMM
 #' @noRd
 .ref_int <- function(ref, arg = "ref") {
   if (inherits(ref, "Date")) ref <- format(ref, "%Y%m")
@@ -72,7 +72,7 @@ estban_cache_dir <- function(cache_dir = NULL, create = TRUE) {
   as.integer(format(seq(d0, d1, by = "month"), "%Y%m"))
 }
 
-#' Level argument (file family) -> normalised value
+#' Level argument (file family) -> normalized value
 #' @noRd
 .level <- function(level) {
   rlang::arg_match0(level, c("agencia", "municipio"))
@@ -80,7 +80,7 @@ estban_cache_dir <- function(cache_dir = NULL, create = TRUE) {
 
 # -- Column names --------------------------------------------------------------
 
-#' Normalise ESTBAN column names to snake_case
+#' Normalize ESTBAN column names to snake_case
 #'
 #' Lower case, accents stripped, every run of non-alphanumeric characters
 #' collapsed to a single underscore. Combined columns such as

@@ -14,7 +14,7 @@ order above applies.}
 (default \code{TRUE}).}
 }
 \value{
-A normalised directory path (character scalar).
+A normalized directory path (character scalar).
 }
 \description{
 The directory where downloaded ESTBAN files are kept. Resolution order:

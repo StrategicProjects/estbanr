@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{estban_clean_names}
 \alias{estban_clean_names}
-\title{Normalise ESTBAN column names to snake_case}
+\title{Normalize ESTBAN column names to snake_case}
 \usage{
 estban_clean_names(x)
 }

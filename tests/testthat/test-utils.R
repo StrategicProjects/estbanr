@@ -1,4 +1,4 @@
-test_that("estban_clean_names normalises accents, case and separators", {
+test_that("estban_clean_names normalizes accents, case and separators", {
   x <- c("#DATA_BASE", "VERBETE_174_PROV_P/_OPER_CREDITOS",
          "VERBETE_141_CORRESPONDENTES_NO_EXTERIOR + VERBETE_142_CORRESPONDENTES_NO_PAIS",
          "MUNICÍPIO")
