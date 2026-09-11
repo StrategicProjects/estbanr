@@ -43,11 +43,11 @@ and avoid re-downloading months you already have.
 
 ``` r
 estban_cache_dir()
-#> [1] "/tmp/Rtmp0jb7u7/estbanr-cache"
+#> [1] "/tmp/RtmpUnjFad/estbanr-cache"
 
 # Persistent cache for the current session only:
 old <- options(estbanr.cache_dir = file.path(tempdir(), "estban-cache"))
 estban_cache_dir()
-#> [1] "/tmp/Rtmp0jb7u7/estban-cache"
+#> [1] "/tmp/RtmpUnjFad/estban-cache"
 options(old)
 ```
