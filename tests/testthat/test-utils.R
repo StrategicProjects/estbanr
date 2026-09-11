@@ -23,7 +23,10 @@ test_that("reference months are validated and sequenced", {
 test_that("cache dir resolution follows argument > env > option > tempdir", {
   withr::local_envvar(ESTBANR_CACHE_DIR = "")
   withr::local_options(estbanr.cache_dir = NULL)
-  expect_equal(dirname(estban_cache_dir()), normalizePath(tempdir()))
+  # Compare with forward slashes on both sides: on Windows dirname() returns
+  # "/" while normalizePath() returns "\\" for the same path.
+  expect_equal(normalizePath(dirname(estban_cache_dir()), winslash = "/"),
+               normalizePath(tempdir(), winslash = "/"))
 
   withr::local_options(estbanr.cache_dir = file.path(tempdir(), "opt-cache"))
   expect_true(endsWith(estban_cache_dir(create = FALSE), "opt-cache"))
