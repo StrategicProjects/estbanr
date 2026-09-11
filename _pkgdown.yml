@@ -1,0 +1,68 @@
+url: https://strategicprojects.github.io/estbanr/
+
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+  bslib:
+    primary: "#0d6efd"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
+  includes:
+    in_header: pkgdown/extra.css
+
+home:
+  title: "estbanr: ESTBAN monthly banking statistics by municipality from R"
+  description: >
+    Download, read and tidy the Brazilian Central Bank's ESTBAN files
+    (monthly balance-sheet accounts of every bank branch and municipality),
+    with an idempotent cache, state filters, an account dictionary and
+    tools to detect and impute non-reported institution-months.
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+  components:
+    articles:
+      text: Articles
+      menu:
+        - text: Getting started
+          href: articles/getting-started.html
+        - text: Non-reports and imputation
+          href: articles/nonreport-imputation.html
+
+reference:
+  - title: "Download and read"
+    desc: "From the Central Bank site to a typed tibble."
+    contents:
+      - estban_fetch
+      - estban_download
+      - estban_read
+      - estban_url
+
+  - title: "Layout and accounts"
+    desc: "Column layout of the files and the COSIF account dictionary."
+    contents:
+      - estban_columns
+      - estban_verbetes
+      - estban_clean_names
+
+  - title: "Non-reports and aggregation"
+    desc: "Detect institution-months that were not reported, impute them, and aggregate to municipalities."
+    contents:
+      - estban_flag_nonreport
+      - estban_impute_nonreport
+      - estban_by_municipality
+
+  - title: "Cache"
+    contents:
+      - estban_cache_dir
+
+  - title: "Package"
+    contents:
+      - estbanr-package
+
+footer:
+  structure:
+    left: developed_by
+    right: built_with

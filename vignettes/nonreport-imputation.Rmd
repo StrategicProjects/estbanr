@@ -1,0 +1,107 @@
+---
+title: "Non-reports and imputation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Non-reports and imputation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+## The problem
+
+ESTBAN is assembled by the Central Bank from the monthly returns of each
+institution. Once in a while a bank's return does not make it into the
+file. The bank is still listed, with every branch and every account equal
+to **zero**. A documented case is Banco Santander from January to March
+2025: three consecutive months at zero in the whole country, then back to
+normal in April.
+
+This is a **non-report**, not a zero balance sheet. Summing those rows into
+a municipal series makes credit and deposits fall by the bank's share for
+three months and jump back, and any model fed with the series reads that as
+a real shock. Re-downloading does not help: the published files are what
+they are.
+
+## Detecting it
+
+`estban_flag_nonreport()` marks every row of an institution-month whose
+accounts sum to zero **across the whole table**. The wider the table, the
+safer the test: one dormant branch can legitimately have zero everywhere,
+but a bank with zeros in every city of a state (or of the country) has not
+reported.
+
+Let us build a three-month series from the extract shipped with the
+package and make one bank vanish in February:
+
+```{r}
+library(estbanr)
+
+f  <- system.file("extdata", "202401_ESTBAN_AG_sample.CSV", package = "estbanr")
+m1 <- estban_read(f, uf = "PE")
+verb <- grep("^verbete_", names(m1))
+
+m2 <- m1; m2$ref <- 202402L; m2[, verb] <- m2[, verb] * 1.05
+m3 <- m1; m3$ref <- 202403L; m3[, verb] <- m3[, verb] * 1.10
+m2[m2$cnpj == "60746948", verb] <- 0          # Bradesco: nothing in February
+
+x <- rbind(m1, m2, m3)
+flagged <- estban_flag_nonreport(x)
+unique(flagged[flagged$nonreport, c("nome_instituicao", "ref")])
+```
+
+## Fixing it
+
+`estban_impute_nonreport()` treats the flagged institution-months as
+missing, collapses branches to one row per institution and municipality,
+and fills **interior** gaps by linear interpolation along each
+(institution, municipality, account) series. Gaps at the start or end of a
+series are left as `NA`: a bank that stopped reporting last month stays
+missing until the file is revised, instead of being invented.
+
+```{r}
+imp <- estban_impute_nonreport(x)
+v <- "verbete_160_operacoes_de_credito"
+imp[imp$cnpj == "60746948" & imp$municipio == "CARUARU", c("ref", v, "imputed")]
+```
+
+February is now the midpoint of January and March, and the `imputed`
+column says how many accounts were filled in that row (all 45).
+
+## Effect on the municipal series
+
+`estban_by_municipality()` runs the imputation by default. Compare the
+credit series of Caruaru with and without it:
+
+```{r}
+raw <- estban_by_municipality(x, impute = FALSE)
+fix <- estban_by_municipality(x)
+data.frame(
+  ref     = raw$ref[raw$municipio == "CARUARU"],
+  raw     = raw[[v]][raw$municipio == "CARUARU"],
+  imputed = fix[[v]][fix$municipio == "CARUARU"]
+)
+```
+
+Without the treatment, February is short by the whole credit of the missing
+bank (here a small share of the city, so the total does not even fall, which
+is exactly what makes the error hard to spot); with it, February sits between
+January and March as it should.
+
+## When not to impute
+
+* **Short extracts.** With a single month there are no neighbours; the
+  flag still works, the interpolation cannot.
+* **Genuine exits.** A bank that closed all branches in a municipality
+  shows zero from then on. That is an edge gap and is left as `NA` by
+  design, but if the closure happened *between* two reported months in
+  your window (it reopened later), the interpolation would bridge it. Look
+  at the `imputed` column and at `nonreport` before trusting a long
+  bridge.
+* **Balance identities.** Interpolated accounts no longer add up exactly to
+  the totals (`verbete_399_total_do_ativo`, `verbete_899_total_do_passivo`),
+  because each account is interpolated separately. Recompute totals from
+  components if you need the identity.

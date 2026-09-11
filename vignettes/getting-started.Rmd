@@ -1,0 +1,126 @@
+---
+title: "Getting started with estbanr"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting started with estbanr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+## What ESTBAN is
+
+**ESTBAN** (*Estatística Bancária Mensal por Município*) is the monthly
+balance-sheet statistic that the Brazilian Central Bank publishes for every
+bank branch in the country, aggregated from the accounting document 4500.
+Each row carries the balances of about 45 accounts (*verbetes*) of the
+COSIF chart of accounts, such as credit operations (160), financing (162),
+rural credit (163), savings deposits (420) and time deposits (432), for one
+branch (`agencia` files) or one institution in one municipality
+(`municipio` files).
+
+Because it is monthly, municipal and goes back to 1988, ESTBAN is the only
+public source of credit and deposits at the municipal level in Brazil. It is
+also a large, awkward download: one national CSV per month, `;`-separated,
+Latin-1 encoded, with two title lines and file names that changed over the
+years.
+
+`estbanr` takes care of the mechanics:
+
+| Step | Function |
+|:---|:---|
+| Find the right file name for a month | `estban_url()` |
+| Download with an idempotent cache | `estban_download()` |
+| Read the CSV into a typed tibble, optionally one state | `estban_read()` |
+| Download and read a range of months | `estban_fetch()` |
+| Understand the columns | `estban_columns()`, `estban_verbetes()` |
+| Detect and fix non-reported institution-months | `estban_flag_nonreport()`, `estban_impute_nonreport()` |
+| Aggregate to the municipality | `estban_by_municipality()` |
+
+## Installation
+
+```{r, eval = FALSE}
+# From CRAN (when available):
+install.packages("estbanr")
+
+# Development version:
+# remotes::install_github("StrategicProjects/estbanr")
+```
+
+## Reading a file
+
+The package ships a small real extract (Pernambuco and Paraíba, four
+municipalities, January 2024) so you can try everything offline.
+
+```{r}
+library(estbanr)
+
+f <- system.file("extdata", "202401_ESTBAN_AG_sample.CSV", package = "estbanr")
+x <- estban_read(f)
+x[, 1:8]
+```
+
+Column names are converted to `snake_case` and the accounts come back as
+numbers in Brazilian reais:
+
+```{r}
+x[1:3, c("municipio", "nome_instituicao", "verbete_160_operacoes_de_credito",
+         "verbete_420_depositos_de_poupanca")]
+```
+
+Keep one state with `uf`, or the original upper-case names with
+`clean_names = FALSE`:
+
+```{r}
+pe <- estban_read(f, uf = "PE")
+table(pe$municipio)
+```
+
+## The accounts
+
+`estban_verbetes()` maps every account column to its COSIF code. Some
+columns combine several accounts; those have `n_codes > 1`.
+
+```{r}
+v <- estban_verbetes()
+v[v$code %in% c(160, 162, 163, 420, 432), c("name", "codes", "side")]
+v[v$n_codes > 1, c("codes", "n_codes")]
+```
+
+## Downloading real months
+
+`estban_download()` fetches one month and returns the path of the cached
+CSV; `estban_fetch()` does that for a range and stacks the result. Files
+land in a session folder under `tempdir()` unless you set a persistent
+cache (see `?estban_cache_dir`):
+
+```{r, eval = FALSE}
+options(estbanr.cache_dir = "~/data/estban")   # persistent across sessions
+
+x <- estban_fetch(202301, 202312, uf = "PE")
+table(x$ref)
+```
+
+Each national file is about 2 MB compressed; a full year of a single state
+takes a minute or two on a normal connection.
+
+## From branches to municipalities
+
+Most analyses want one row per municipality and month. `estban_by_municipality()`
+sums the accounts over the institutions and branches of each municipality,
+after treating non-reported institution-months (see the vignette
+*Non-reports and imputation*):
+
+```{r}
+m <- estban_by_municipality(x, impute = FALSE)
+m[, c("uf", "municipio", "ref", "verbete_160_operacoes_de_credito")]
+```
+
+The long form is convenient for plotting and joins:
+
+```{r}
+head(estban_by_municipality(x, impute = FALSE, long = TRUE))
+```
