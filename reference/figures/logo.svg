@@ -1,0 +1,28 @@
+<svg width="100%" viewBox="0 0 316 372" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<clipPath id="hx">
+<polygon points="158,0 316,88 316,274 158,362 0,274 0,88"/>
+</clipPath>
+<linearGradient id="bg" x1="0" y1="0" x2="0.4" y2="1">
+<stop offset="0%" stop-color="#0b2a4a"/>
+<stop offset="100%" stop-color="#134d6b"/>
+</linearGradient>
+</defs>
+<g clip-path="url(#hx)">
+<rect x="0" y="0" width="316" height="372" fill="url(#bg)"/>
+<!-- bars: monthly balances -->
+<rect x="52" y="214" width="26" height="70" rx="4" fill="#2e8b57" opacity="0.95"/>
+<rect x="88" y="192" width="26" height="92" rx="4" fill="#3aa66a" opacity="0.95"/>
+<rect x="124" y="238" width="26" height="46" rx="4" fill="#e9c46a" opacity="0.95"/>
+<rect x="160" y="176" width="26" height="108" rx="4" fill="#3aa66a" opacity="0.95"/>
+<rect x="196" y="160" width="26" height="124" rx="4" fill="#2e8b57" opacity="0.95"/>
+<rect x="232" y="146" width="26" height="138" rx="4" fill="#5ec48a" opacity="0.95"/>
+<!-- the gap: a non-reported month, dashed -->
+<rect x="124" y="176" width="26" height="60" rx="4" fill="none" stroke="#e9c46a" stroke-width="3" stroke-dasharray="6 5"/>
+<!-- baseline -->
+<rect x="44" y="286" width="228" height="3" fill="#ffffff" opacity="0.5"/>
+</g>
+<polygon points="158,4 312,90 312,272 158,358 4,272 4,90" fill="none" stroke="#5ec48a" stroke-width="6"/>
+<text x="158" y="118" text-anchor="middle" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="44" font-weight="600" letter-spacing="2" fill="#ffffff">estbanr</text>
+<text x="158" y="142" text-anchor="middle" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11" font-weight="400" letter-spacing="3" fill="#cfe8d8">ESTATÍSTICA BANCÁRIA · BCB</text>
+</svg>
