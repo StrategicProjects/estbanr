@@ -113,8 +113,16 @@ estban_download <- function(ref,
   for (url in estban_url(ref, level)) {
     body <- .fetch_raw(url, timeout = timeout)
     if (is.null(body)) next
-    if (verbose) cli::cli_alert_success("ESTBAN {ref} ({level}): downloaded {basename(url)} ({.estban_fmt_bytes(length(body))}).")
-    if (grepl("\\.zip$", url, ignore.case = TRUE)) {
+    tam <- .estban_fmt_bytes(length(body))
+    if (verbose) cli::cli_alert_success("ESTBAN {ref} ({level}): downloaded {basename(url)} ({tam}).")
+    # Trust the bytes, not the name: the Central Bank has served a plain CSV
+    # under a ".csv.zip" name (202602, September 2026). A real zip starts
+    # with the "PK\003\004" local-file-header signature.
+    is_zip <- .is_zip_bytes(body)
+    if (grepl("\\.zip$", url, ignore.case = TRUE) && !is_zip && verbose) {
+      cli::cli_alert_info("ESTBAN {ref}: {basename(url)} is not a zip archive; keeping it as a plain CSV.")
+    }
+    if (is_zip) {
       zip <- tempfile(fileext = ".zip")
       on.exit(unlink(zip), add = TRUE)
       writeBin(body, zip)
@@ -135,6 +143,12 @@ estban_download <- function(ref,
 
   cli::cli_warn("ESTBAN {ref} ({level}): not found under any known file name; probably not published yet.")
   invisible(NULL)
+}
+
+#' Does a raw vector start with the zip local-file-header signature?
+#' @noRd
+.is_zip_bytes <- function(body) {
+  length(body) >= 4L && identical(body[1:4], as.raw(c(0x50, 0x4b, 0x03, 0x04)))
 }
 
 #' Human-readable byte sizes

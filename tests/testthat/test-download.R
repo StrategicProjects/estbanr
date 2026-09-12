@@ -89,3 +89,22 @@ test_that("estban_fetch stacks months and skips the unpublished ones", {
   expect_equal(sort(unique(x$ref)), c(202401L, 202402L))
   expect_equal(nrow(x), 48)
 })
+
+test_that("a plain CSV served under a .zip name is kept as CSV (BCB, 202602)", {
+  f <- system.file("extdata", "202401_ESTBAN_AG_sample.CSV", package = "estbanr")
+  csv_bytes <- readBin(f, "raw", file.size(f))
+  urls <- estban_url(202602)
+  mock <- function(req) {
+    if (req$url == urls[[1]]) return(resp_raw(csv_bytes))   # ".csv.zip" name, CSV body
+    stop("should not get here")
+  }
+  testthat::local_mocked_bindings(.estban_perform = mock, .package = "estbanr")
+  dir <- withr::local_tempdir()
+
+  expect_false(estbanr:::.is_zip_bytes(csv_bytes))
+  csv <- estban_download(202602, cache_dir = dir, verbose = FALSE)
+  expect_true(file.exists(csv))
+  x <- estban_read(csv, uf = "PB", ref = 202602)
+  expect_equal(nrow(x), 27)
+  expect_equal(unique(x$ref), 202602L)
+})
