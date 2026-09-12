@@ -21,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">estbanr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,12 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.1" id="estbanr-011">estbanr 0.1.1<a class="anchor" aria-label="anchor" href="#estbanr-011"></a></h2>
+<ul><li>
+<code><a href="../reference/estban_download.html">estban_download()</a></code> now decides whether a file is a zip archive by its bytes, not by its name: in September 2026 the Central Bank served the February 2026 file as a plain CSV under the <code>202602_ESTBAN_AG.csv.zip</code> name, and the month was silently skipped as “not published”.</li>
+<li>Fixed the download success message, which raised a <code>cli</code> error with <code>verbose = TRUE</code> (an interpolated expression starting with a dot).</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="estbanr-010">estbanr 0.1.0<a class="anchor" aria-label="anchor" href="#estbanr-010"></a></h2>
 <p>Initial release.</p>
 <ul><li>
@@ -61,7 +67,8 @@
 <strong>Non-reports.</strong> <code><a href="../reference/estban_flag_nonreport.html">estban_flag_nonreport()</a></code> detects institution-months published with every account at zero; <code><a href="../reference/estban_impute_nonreport.html">estban_impute_nonreport()</a></code> interpolates interior gaps per institution, municipality and account without extrapolating; <code><a href="../reference/estban_by_municipality.html">estban_by_municipality()</a></code> aggregates to the municipality in wide or long form, imputing by default.</li>
 <li>A small real extract (four municipalities of PE and PB, January 2024) ships in <code>inst/extdata/</code> so examples, tests and vignettes run offline.</li>
 </ul></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

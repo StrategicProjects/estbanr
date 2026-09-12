@@ -1,5 +1,15 @@
 # Changelog
 
+## estbanr 0.1.1
+
+- [`estban_download()`](https://strategicprojects.github.io/estbanr/reference/estban_download.md)
+  now decides whether a file is a zip archive by its bytes, not by its
+  name: in September 2026 the Central Bank served the February 2026 file
+  as a plain CSV under the `202602_ESTBAN_AG.csv.zip` name, and the
+  month was silently skipped as “not published”.
+- Fixed the download success message, which raised a `cli` error with
+  `verbose = TRUE` (an interpolated expression starting with a dot).
+
 ## estbanr 0.1.0
 
 Initial release.
