@@ -22,12 +22,12 @@ Source:
 [`DESCRIPTION`](https://github.com/StrategicProjects/estbanr/blob/main/DESCRIPTION)
 
 Leite A, Wasiliew M, Vasconcelos H, Amorim C, Bezerra D, Nascimento
-Barreto J (2026). *estbanr: Access 'ESTBAN' Monthly Banking Statistics
-by Municipality from the Brazilian Central Bank*. R package version
-0.1.1, <https://strategicprojects.github.io/estbanr/>.
+Barreto J (2026). *estbanr: Brazilian Monthly Banking Statistics by
+Municipality (ESTBAN)*. R package version 0.1.1,
+<https://strategicprojects.github.io/estbanr/>.
 
     @Manual{,
-      title = {estbanr: Access 'ESTBAN' Monthly Banking Statistics by Municipality from the Brazilian Central Bank},
+      title = {estbanr: Brazilian Monthly Banking Statistics by Municipality (ESTBAN)},
       author = {Andre Leite and Marcos Wasiliew and Hugo Vasconcelos and Carlos Amorim and Diogo Bezerra and Júlia {Nascimento Barreto}},
       year = {2026},
       note = {R package version 0.1.1},

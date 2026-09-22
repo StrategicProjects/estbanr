@@ -1,17 +1,20 @@
-# estbanr: Access 'ESTBAN' Monthly Banking Statistics by Municipality from the Brazilian Central Bank
+# estbanr: Brazilian Monthly Banking Statistics by Municipality (ESTBAN)
 
-Download, read and tidy the 'ESTBAN' ('Estatistica Bancaria Mensal por
-Municipio'), the monthly banking statistics published by the Brazilian
-Central Bank ('Banco Central do Brasil') for every bank branch and
-municipality in Brazil, with balance-sheet accounts ('verbetes' of the
-'COSIF' chart of accounts) such as credit operations, deposits and
-savings. Files are fetched from the official site
+Download, read and tidy the ESTBAN (Estatistica Bancaria Mensal por
+Municipio, Monthly Banking Statistics by Municipality) files published
+by the Brazilian Central Bank (Banco Central do Brasil) for every bank
+branch and municipality in Brazil. Each file reports balance-sheet
+accounts of the COSIF (Plano Contabil das Instituicoes do Sistema
+Financeiro Nacional, the chart of accounts of the Brazilian financial
+system) such as credit operations, deposits and savings. Files are
+fetched from the official site
 <https://www.bcb.gov.br/estatisticas/estatisticabancariamunicipios> with
-an idempotent local cache, read from their 'Latin-1' CSV layout into
-tibbles, optionally filtered by state, and aggregated by municipality.
-Includes tools to detect and impute institution-month non-reports (an
-institution present in the file with every account equal to zero), which
-would otherwise be mistaken for zero balances.
+an idempotent local cache, read from their Latin-1 encoded CSV
+(comma-separated values) layout into tibbles, optionally filtered by
+state, and aggregated by municipality. Includes tools to detect and
+impute institution-month non-reports (an institution present in the file
+with every account equal to zero), which would otherwise be mistaken for
+zero balances.
 
 ## See also
 

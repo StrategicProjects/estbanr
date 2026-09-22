@@ -44,5 +44,5 @@ aggregate to municipalities.
 
 - [`estbanr`](https://strategicprojects.github.io/estbanr/reference/estbanr-package.md)
   [`estbanr-package`](https://strategicprojects.github.io/estbanr/reference/estbanr-package.md)
-  : estbanr: Access 'ESTBAN' Monthly Banking Statistics by Municipality
-  from the Brazilian Central Bank
+  : estbanr: Brazilian Monthly Banking Statistics by Municipality
+  (ESTBAN)
