@@ -1,6 +1,5 @@
 Package: estbanr
-Title: Access 'ESTBAN' Monthly Banking Statistics by Municipality from the
-    Brazilian Central Bank
+Title: Brazilian Monthly Banking Statistics by Municipality (ESTBAN)
 Version: 0.1.1
 Authors@R: c(
     person("Andre", "Leite", email = "leite@castlab.org", role = c("aut", "cre"),
@@ -14,18 +13,21 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-1216-8674")),
     person("Júlia", "Nascimento Barreto",
            email = "juliabarreto@gd.seplag.pe.gov.br", role = "aut"))
-Description: Download, read and tidy the 'ESTBAN' ('Estatistica Bancaria
-    Mensal por Municipio'), the monthly banking statistics published by the
-    Brazilian Central Bank ('Banco Central do Brasil') for every bank branch
-    and municipality in Brazil, with balance-sheet accounts ('verbetes' of
-    the 'COSIF' chart of accounts) such as credit operations, deposits and
-    savings. Files are fetched from the official site
-    <https://www.bcb.gov.br/estatisticas/estatisticabancariamunicipios>
-    with an idempotent local cache, read from their 'Latin-1' CSV layout
-    into tibbles, optionally filtered by state, and aggregated by
-    municipality. Includes tools to detect and impute institution-month
-    non-reports (an institution present in the file with every account
-    equal to zero), which would otherwise be mistaken for zero balances.
+Description: Download, read and tidy the ESTBAN (Estatistica Bancaria Mensal
+    por Municipio, Monthly Banking Statistics by Municipality) files
+    published by the Brazilian Central Bank (Banco Central do Brasil) for
+    every bank branch and municipality in Brazil. Each file reports
+    balance-sheet accounts of the COSIF (Plano Contabil das Instituicoes do
+    Sistema Financeiro Nacional, the chart of accounts of the Brazilian
+    financial system) such as credit operations, deposits and savings. Files
+    are fetched from the official site
+    <https://www.bcb.gov.br/estatisticas/estatisticabancariamunicipios> with
+    an idempotent local cache, read from their Latin-1 encoded CSV
+    (comma-separated values) layout into tibbles, optionally filtered by
+    state, and aggregated by municipality. Includes tools to detect and
+    impute institution-month non-reports (an institution present in the file
+    with every account equal to zero), which would otherwise be mistaken for
+    zero balances.
 License: MIT + file LICENSE
 URL: https://strategicprojects.github.io/estbanr/, https://github.com/StrategicProjects/estbanr
 BugReports: https://github.com/StrategicProjects/estbanr/issues

@@ -1,6 +1,22 @@
+## Resubmission
+
+This is a resubmission of the first release, addressing the CRAN review of
+2026-09-22:
+
+* The `Title` was shortened to 61 characters.
+* Single quotes in `Title` and `Description` are now used only around
+  package, software and API names; they were removed from acronyms
+  (ESTBAN, COSIF, CSV) and from proper names (Banco Central do Brasil,
+  Latin-1).
+* Every acronym in the `Description` is now spelled out: ESTBAN, COSIF and
+  CSV.
+
+Version is 0.1.1 because a download fix (a CSV served under a `.zip` name
+by the Central Bank) landed between the two submissions; see `NEWS.md`.
+
 ## Submission summary
 
-`estbanr 0.1.0` — first release.
+`estbanr 0.1.1` — first release.
 
 The package downloads, reads and tidies the ESTBAN files (monthly banking
 statistics by municipality) published by the Brazilian Central Bank, and
